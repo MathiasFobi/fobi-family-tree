@@ -1,31 +1,10 @@
 import Link from "next/link";
-import { getChildren, getRemembered, getFamilyData, type Person } from "@/lib/family";
-import { CollapseControls } from "@/components/CollapseControls";
+import { getRemembered, getFamilyData, type Person } from "@/lib/family";
+import { FamilyTree } from "@/components/FamilyTree";
 
 function fullName(p: Person): string {
   const parts = [p.name, p.middleName, p.surname].filter(Boolean);
   return parts.join(" ");
-}
-
-function PersonCard({ person }: { person: Person }) {
-  const isR = person.status === "remembered";
-  const kids = getChildren(person.id);
-  const detailHref = `/tree/${person.id}`;
-
-  return (
-    <Link href={detailHref} className={`person glass${isR ? " remembered" : ""}`}>
-      <div className="name">
-        <span>{fullName(person) || person.name}</span>
-        {isR && <span className="rip-badge">RIP</span>}
-      </div>
-      <div className="meta">
-        {kids.length > 0 && (
-          <span className="children-count">↳ {kids.length}</span>
-        )}
-        <span>Gen {person.generation}</span>
-      </div>
-    </Link>
-  );
 }
 
 export default function HomePage() {
@@ -132,46 +111,14 @@ export default function HomePage() {
               <div className="kicker">Browse</div>
               <h2>The Family Tree</h2>
               <p className="lede">
-                Three generations and {data.stats.total} family members. Tap any
-                name to see their place in the tree.
+                A visual tree of {data.stats.total} family members across three
+                generations. Click any name to expand its descendants — or tap
+                a name to open that person&apos;s full profile.
               </p>
             </div>
-            <CollapseControls />
           </div>
 
-          <div className="tree">
-            {(["1", "2", "3"] as const).map((gen, i) => {
-              const titles: Record<"1" | "2" | "3", string> = {
-                "1": "Generation 1 — Children of Vincent & Barbara",
-                "2": "Generation 2 — Grandchildren",
-                "3": "Generation 3 — Great-Grandchildren",
-              };
-              const counts: Record<"1" | "2" | "3", number> = {
-                "1": data.stats.gen1,
-                "2": data.stats.gen2,
-                "3": data.stats.gen3,
-              };
-              return (
-                <details key={gen} className="collapsible glass" open={i === 0}>
-                  <summary>
-                    <span className="summary-text">
-                      <span className="kicker">Gen {gen}</span>
-                      <span className="title">{titles[gen]}</span>
-                    </span>
-                    <span className="count-pill">{counts[gen]}</span>
-                    <span className="chevron" aria-hidden="true">›</span>
-                  </summary>
-                  <div className="details-body">
-                    <div className="gen-grid">
-                      {data.generations[gen].map((p) => (
-                        <PersonCard key={p.id} person={p} />
-                      ))}
-                    </div>
-                  </div>
-                </details>
-              );
-            })}
-          </div>
+          <FamilyTree />
         </section>
 
         {/* IN MEMORIAM (collapsible) */}
