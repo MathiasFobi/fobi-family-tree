@@ -48,7 +48,7 @@ export default async function PersonPage({
             href="/#tree"
             style={{
               fontSize: 14,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               fontFamily: "ui-sans-serif, system-ui, sans-serif",
             }}
           >
@@ -128,8 +128,10 @@ export default async function PersonPage({
           <p
             className="lede"
             style={{
-              background: "var(--leaf-soft)",
-              border: "1px solid var(--leaf)",
+              background: "rgba(47, 93, 58, 0.18)",
+              border: "1px solid rgba(47, 93, 58, 0.35)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
               borderRadius: 12,
               padding: 20,
               color: "var(--ink)",
@@ -143,7 +145,7 @@ export default async function PersonPage({
           <p
             style={{
               fontSize: 13,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               fontFamily: "ui-sans-serif, system-ui, sans-serif",
             }}
           >
