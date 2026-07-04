@@ -4,3 +4,7 @@ out/
 .env*.local
 .DS_Store
 *.log
+.vercel
+
+# Local data files (uncomment to ignore the spreadsheet, or keep it for now)
+# Vincent_and_Barbara_Fobi_Descendants.xlsx
